@@ -1,5 +1,7 @@
 package com.picturejni
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
@@ -12,6 +14,11 @@ class MainActivity : AppCompatActivity() {
 
         // Example of a call to a native method
         sample_text.text = stringFromJNI()
+
+        var srcBitmap = BitmapFactory.decodeResource(resources, R.mipmap.hh)
+        var desBitmap = Bitmap.createBitmap(srcBitmap.width, srcBitmap.height, Bitmap.Config.ARGB_8888)
+        copyBitmap(srcBitmap, desBitmap)
+        ivBitmap.setImageBitmap(desBitmap)
     }
 
     /**
@@ -19,6 +26,7 @@ class MainActivity : AppCompatActivity() {
      * which is packaged with this application.
      */
     external fun stringFromJNI(): String
+    external fun copyBitmap(srcBitmap: Bitmap, desBitmap: Bitmap): Unit
 
     companion object {
 
